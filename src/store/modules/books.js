@@ -1,8 +1,6 @@
-import { createStore } from "vuex";
+import { getBooks } from "@/api/books";
 
-import { getBooks } from "./api/books";
-
-export default createStore({
+export default {
   state: {
     books: [],
   },
@@ -22,5 +20,5 @@ export default createStore({
       });
     },
   },
-  strict: process.env.NODE_ENV !== "production",
-});
+  namespaced: true,
+};

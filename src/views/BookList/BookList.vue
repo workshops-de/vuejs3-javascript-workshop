@@ -14,6 +14,9 @@
 
 <script>
 import BookListItem from "@/components/BookListItem/BookListItem.vue";
+import { createNamespacedHelpers } from "vuex";
+
+const { mapState, mapActions } = createNamespacedHelpers("books");
 
 export default {
   name: "BookList",
@@ -26,16 +29,18 @@ export default {
     };
   },
   computed: {
-    books() {
-      return this.$store.state.books;
-    },
+    ...mapState(["books"]),
     filteredBooks() {
       return this.books.filter((book) => book.title.includes(this.search));
     },
   },
   methods: {
+    ...mapActions({
+      setBooks: "SET_BOOKS",
+      getBooks: "GET_BOOKS",
+    }),
     readBook(book) {
-      this.$store.dispatch("SET_BOOKS", {
+      this.setBooks({
         books: [
           ...this.books.map((bookEntry) => {
             if (bookEntry.isbn === book.isbn) {
@@ -50,7 +55,7 @@ export default {
       });
     },
     async updateBooks() {
-      await this.$store.dispatch("GET_BOOKS");
+      await this.getBooks();
     },
   },
   created() {
