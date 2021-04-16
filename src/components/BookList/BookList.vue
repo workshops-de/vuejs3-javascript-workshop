@@ -12,8 +12,6 @@
 <script>
 import BookListItem from "@/components/BookListItem/BookListItem.vue";
 
-import BOOKS from "./books";
-
 export default {
   name: "BookList",
   components: {
@@ -31,9 +29,13 @@ export default {
         read: true,
       };
     },
+    async updateBooks() {
+      const response = await fetch("http://localhost:4730/books");
+      this.books = await response.json();
+    },
   },
   created() {
-    this.books = [...BOOKS];
+    this.updateBooks();
   },
 };
 </script>
