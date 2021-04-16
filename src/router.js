@@ -3,6 +3,7 @@ import BookList from "@/views/BookList/BookList.vue";
 import About from "@/views/About/About.vue";
 import NotFound from "@/views/NotFound/NotFound.vue";
 import BookDetail from "@/views/BookDetail/BookDetail.vue";
+import Books from "@/views/Books/Books.vue";
 
 const routes = [
   {
@@ -11,13 +12,19 @@ const routes = [
   },
   {
     path: "/books",
-    name: "Books",
-    component: BookList,
-  },
-  {
-    path: "/books/:isbn",
-    name: "BookDetail",
-    component: BookDetail,
+    component: Books,
+    children: [
+      {
+        path: "",
+        name: "Books",
+        component: BookList,
+      },
+      {
+        path: ":isbn",
+        name: "BookDetail",
+        component: BookDetail,
+      },
+    ],
   },
   {
     path: "/about",
