@@ -1,17 +1,15 @@
 <template>
   <AppNavigation />
-  <BookList />
+  <router-view />
 </template>
 
 <script>
 import AppNavigation from "./components/AppNavigation/AppNavigation.vue";
-import BookList from "./components/BookList/BookList.vue";
 
 export default {
   name: "App",
   components: {
     AppNavigation,
-    BookList,
   },
 };
 </script>
