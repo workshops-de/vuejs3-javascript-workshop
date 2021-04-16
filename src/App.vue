@@ -1,14 +1,17 @@
 <template>
   <AppNavigation />
+  <MouseCursor />
 </template>
 
 <script>
 import AppNavigation from "./components/AppNavigation/AppNavigation.vue";
+import MouseCursor from "./components/MouseCursor/MouseCursor.vue";
 
 export default {
   name: "App",
   components: {
     AppNavigation,
+    MouseCursor,
   },
 };
 </script>
