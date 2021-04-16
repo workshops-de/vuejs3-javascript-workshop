@@ -4,10 +4,10 @@
 
   <table>
     <BookListItem
-      v-for="(book, index) in filteredBooks"
+      v-for="book in filteredBooks"
       :key="book.isbn"
       v-bind="book"
-      @read="readBook(index)"
+      @read="readBook(book)"
     />
   </table>
 </template>
@@ -23,27 +23,34 @@ export default {
   data() {
     return {
       search: "",
-      books: [],
     };
   },
   computed: {
+    books() {
+      return this.$store.state.books;
+    },
     filteredBooks() {
       return this.books.filter((book) => book.title.includes(this.search));
     },
   },
   methods: {
-    readBook(index) {
-      this.books[index] = {
-        ...this.books[index],
-        read: true,
-      };
+    readBook(book) {
+      this.$store.dispatch("SET_BOOKS", {
+        books: [
+          ...this.books.map((bookEntry) => {
+            if (bookEntry.isbn === book.isbn) {
+              return {
+                ...bookEntry,
+                read: true,
+              };
+            }
+            return bookEntry;
+          }),
+        ],
+      });
     },
     async updateBooks() {
-      const response = await fetch("http://localhost:4730/books");
-      this.books = await response.json();
-      this.$store.dispatch("SET_BOOKS", {
-        books: this.books,
-      });
+      await this.$store.dispatch("GET_BOOKS");
     },
   },
   created() {
