@@ -1,18 +1,12 @@
 <template>
-  <h1>
-    {{ book.title }}
-    (<router-link :to="{ name: 'BookEdit', params: { isbn: isbn } }"
-      >Edit</router-link
-    >)
-  </h1>
-  <ol>
-    <li v-for="(value, key) in book" :key="key">{{ key }}: {{ value }}</li>
-  </ol>
+  <form>
+    <input type="text" v-model.lazy.trim="book.title" name="title" />
+  </form>
 </template>
 
 <script>
 export default {
-  name: "BookDetail",
+  name: "BookEdit",
   data() {
     return {
       book: {},
@@ -35,18 +29,5 @@ export default {
   beforeRouteUpdate(to) {
     this.init(to.params.isbn);
   },
-  beforeRouteLeave() {
-    const answer = window.confirm(
-      "Do you really want to leave? you have unsaved changes!"
-    );
-    return answer;
-  },
 };
 </script>
-
-<style scoped>
-ol {
-  list-style: none;
-  text-align: left;
-}
-</style>
